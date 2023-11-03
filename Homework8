@@ -1,0 +1,87 @@
+x <- c(22,24,26,28,40)
+y <- c(10,19,29,33,68)
+relation <- lm (y~x)
+print(relation)
+
+# part a
+print(summary(relation))
+
+# part b
+library(MASS)
+stud_resids <- studres(relation)
+print(stud_resids)
+qt(p = .025, df = 2, lower.tail = TRUE)
+
+# part c
+hats <- as.data.frame(hatvalues(relation))
+print(hats)
+
+# part d
+relation$cooks.dis <- cooks.distance(relation)
+print(relation$cooks.dis)
+
+
+Output:
+
+> x <- c(22,24,26,28,40)
+> y <- c(10,19,29,33,68)
+> relation <- lm (y~x)
+> print(relation)
+
+Call:
+lm(formula = y ~ x)
+
+Coefficients:
+(Intercept)            x  
+     -55.28         3.11  
+
+> 
+> # part a
+> print(summary(relation))
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    1     2     3     4     5 
+-3.14 -0.36  3.42  1.20 -1.12 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -55.2800     5.7864  -9.554 0.002433 ** 
+x             3.1100     0.2016  15.428 0.000592 ***
+---
+Signif. codes:  
+0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 2.851 on 3 degrees of freedom
+Multiple R-squared:  0.9876,	Adjusted R-squared:  0.9834 
+F-statistic:   238 on 1 and 3 DF,  p-value: 0.0005915
+
+> 
+> # part b
+> library(MASS)
+> stud_resids <- studres(relation)
+> print(stud_resids)
+         1          2          3          4          5 
+-1.9369436 -0.1219673  1.7876626  0.3992908 -1.8985778 
+> qt(p = .025, df = 2, lower.tail = TRUE)
+[1] -4.302653
+> 
+> # part c
+> hats <- as.data.frame(hatvalues(relation))
+> print(hats)
+  hatvalues(relation)
+1                0.38
+2                0.28
+3                0.22
+4                0.20
+5                0.92
+> 
+> # part d
+> relation$cooks.dis <- cooks.distance(relation)
+> print(relation$cooks.dis)
+           1            2            3            4 
+ 0.599676557  0.004306809  0.260221542  0.027686628 
+           5 
+11.094339623 
